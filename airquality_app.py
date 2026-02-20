@@ -16,6 +16,7 @@ def hello_world():
     return "<p>Hello, Welcome to NYC Air Quality API!!</p>"
 
 
+# get list of records
 @app.get("/api/list")
 def list_records():
 
@@ -69,7 +70,8 @@ def filter_by_value(data, filterby, filtervalue):
         return "Invalid Filter Value"
     if filterby not in data.columns:
         return "Invalid Filterby Column"
-    # choosing column for filtering based on parameter
+
+    # choosing column for filtering based on parameters.
 
     text_columns = [
         "Unique ID",
@@ -99,6 +101,7 @@ def apply_limit_offset(data, limit, offset):
     return data.iloc[offset : offset + limit]
 
 
+# convert to json format or csv
 def convert_to_format(data, format):
     if format == "json":
         return Response(data.to_json(orient="records"), mimetype="application/json")

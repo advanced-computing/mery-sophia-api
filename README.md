@@ -21,6 +21,7 @@ We can also limit the list returned to ```x``` number of list by adding ```?limi
 
 ## List NYC Air Quality
 source: [NYC Open Data](https://data.cityofnewyork.us/Environment/Air-Quality/c3uy-2p5r/about_data)
+please look at the data dictionary for more insights.
 - Method: GET
 - Path: ```/api/list```
 - Query parameters: 
