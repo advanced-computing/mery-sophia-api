@@ -30,7 +30,7 @@ source: [NYC Open Data](https://data.cityofnewyork.us/Environment/Air-Quality/c3
         - ```Indicator%20ID```: Identifier of the type of measured value across time and space.
         - ```Name``` : Name of Indicator.
         - ```Measure```: How the indicator is measured.
-        - ```Measure%Info```: Information (such as units) about the measure.
+        - ```Measure%20Info```: Information (such as units) about the measure.
         - ```Geo%20Type%20Name```: Geography type; UHF' stands for United Hospital Fund neighborhoods; For instance, Citywide.
         - ```Geo%20Join%20ID```: Identifier of the neighborhood geographic area, used for joining to mapping geography files.
         - ```Geo%20Place%20Name```: Neighborhood name.
