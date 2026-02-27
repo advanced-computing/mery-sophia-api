@@ -1,0 +1,14 @@
+{
+    "python.testing.pytestArgs": [
+        "venv"
+    ],
+    "python.testing.unittestEnabled": true,
+    "python.testing.pytestEnabled": false,
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./venv",
+        "-p",
+        "test_*.py"
+    ]
+}
