@@ -7,20 +7,22 @@ import pandas as pd
 # load data
 def load_data(csv_path: str = "Air_Quality.csv") -> pd.DataFrame:
     df = pd.read_csv(csv_path)
-    df.columns = df.colums.str.strip()
+    df.columns = df.columns.str.strip()
     return df
 
 
 # 1. check unique_id whether it is within certain length
 def check_unique_len(
-    df: pd.DataFrame, id_col: str = "Unique ID", expected_length: int = 6
+    df: pd.DataFrame,
+    id_col: str = "Unique ID",
+    expected_length: int = 6,
 ) -> bool:
     if id_col not in df.columns:
         return False
 
     length = df[id_col].astype(str).str.len()
 
-    return (length == expected_length).all()
+    return bool((length == expected_length).all())
 
 
 # 2. find outlier
@@ -30,7 +32,7 @@ def outlier_found(
     r: float = 1.5,
 ) -> dict:
     if col not in df.columns:
-        return ValueError(f"Missing column: {col}")
+        raise ValueError(f"Missing column: {col}")
 
     s = pd.to_numeric(df[col], errors="coerce")
     if s.isna().any():
@@ -56,7 +58,7 @@ def outlier_found(
         "iqr": float(iqr),
         "lower": float(lower),
         "upper": float(upper),
-        "outlier_count": float(outliers_count),
+        "outlier_count": outliers_count,
         "total": total,
         "outliers_rate": float(outliers_rate),
     }
@@ -77,8 +79,8 @@ def check_ranges(
     if not s.notna().all():
         return False
 
-    # set the range check
-    if not (s > min_allowed).all():
+    # set the range check (include 0 as minimum )
+    if not (s >= min_allowed).all():
         return False
 
     return True
