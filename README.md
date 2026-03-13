@@ -64,29 +64,30 @@ please look at the data dictionary for more insights.
 
 
 ## DATABASE
+
 ### GET USERS
 - Method: GET
 - Path: ```/users```
-- Parameters = ``````
+- Parameters = None
 - View data in users table
 
 ### ADD USERS
-- Method: 
+- Method: POST
 - Path: ```/users/add```
-- Parameters = ``````
+- Parameters = Name, Age, Country
 - Add data in users table
 
 
 ### POST USERS
-- Method: 
+- Method: POST
 - Path: ```/users```
-- Parameters = ``````
+- Parameters = Name, Age, Country
 - Add data in users table with both JSON and HTML
 
 ### GET USER STATS
-- Method: 
+- Method: GET
 - Path: ```/users/stats```
-- Parameters = ``````
+- Parameters = None
 - Add data in users table with both JSON and HTML
 
 - Example query:
