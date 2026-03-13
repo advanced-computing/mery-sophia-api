@@ -17,6 +17,12 @@ This page is just a friendly welcome to the API
 
 Returns records from NYC Air Quality Dataset
 
+## Records
+- Method: GET
+- Path: ```/api/record/<record_id>```
+- Parameters = ```record_id```
+- Get data based on ```UNIQUE_ID```
+
 ## Query Parameters
 
 ### Output Format
@@ -54,6 +60,35 @@ please look at the data dictionary for more insights.
 ### Pagination
 - ```limit``` : Max limit of number records to return (default: ```1000```)
 - ```offset```  : Number of records to skip (default : ```0``` )
+
+
+
+## DATABASE
+### GET USERS
+- Method: GET
+- Path: ```/users```
+- Parameters = ``````
+- View data in users table
+
+### ADD USERS
+- Method: 
+- Path: ```/users/add```
+- Parameters = ``````
+- Add data in users table
+
+
+### POST USERS
+- Method: 
+- Path: ```/users```
+- Parameters = ``````
+- Add data in users table with both JSON and HTML
+
+### GET USER STATS
+- Method: 
+- Path: ```/users/stats```
+- Parameters = ``````
+- Add data in users table with both JSON and HTML
+
 - Example query:
 ```
 http://127.0.0.1:5000/api/list?format=csv&filterby=Geo%20Place%20Name&filtervalue=Upper&sortby=Data%20Value&order=desc&limit=25&offset=5
