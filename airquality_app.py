@@ -80,31 +80,31 @@ def get_record(record_id):
 
 
 # GET: view all users
-@app.get("/users")
-def get_users():
-    con = duckdb.connect("air_quality.db")
-    users = con.sql("SELECT * FROM users").fetchall()
-    con.close()
-    return jsonify([{"username": u[0], "age": u[1], "country": u[2]} for u in users])
+# @app.get("/users")
+# def get_users():
+#     con = duckdb.connect("air_quality.db")
+#     users = con.sql("SELECT * FROM users").fetchall()
+#     con.close()
+#     return jsonify([{"username": u[0], "age": u[1], "country": u[2]} for u in users])
 
 
-# GET: Use HTML form to add user from the browser
-# because POST only works on terminal, we create HTML to make input available in website
-@app.route("/users/add")
-def add_user_form():
-    return """
-        <h2>Add a New User</h2>
-        <form method="POST" action="/users">
-            <label>Username: <input name="username" placeholder="Username"></label><br><br>
-            <label>Age: <input name="age" placeholder="Age" type="number"></label><br><br>
-            <label>Country: <input name="country" placeholder="Country"></label><br><br>
-            <button type="submit">Add User</button>
-        </form>
-    """
+# # GET: Use HTML form to add user from the browser
+# # because POST only works on terminal, we create HTML to make input available in website
+# @app.route("/users/add")
+# def add_user_form():
+#     return """
+#         <h2>Add a New User</h2>
+#         <form method="POST" action="/users">
+#             <label>Username: <input name="username" placeholder="Username"></label><br><br>
+#             <label>Age: <input name="age" placeholder="Age" type="number"></label><br><br>
+#             <label>Country: <input name="country" placeholder="Country"></label><br><br>
+#             <button type="submit">Add User</button>
+#         </form>
+#     """
 
 
 # POST: Add a new user (accepts both JSON and HTML form)
-@app.post("/users")
+@app.route("/add_user", methods=["POST"])
 def add_user():
     if request.is_json:
         data = request.get_json()
@@ -112,12 +112,16 @@ def add_user():
     else:
         data = request.form
 
+    print(data)
+
     username = data.get("username")
     age = data.get("age")
     country = data.get("country")
 
     if not username or not age or not country:
         return jsonify({"error": "all fields are required"}), 400
+
+    print(username)
 
     con = duckdb.connect("air_quality.db")
     con.execute(
