@@ -11,6 +11,7 @@ print(con.execute("SHOW TABLES").fetchall())
 con.close()
 
 file = "cpi.db"
+# add Month 2 data as new data
 new_data = pd.read_csv("PCPI25M2.csv")
 new_data_columns = new_data.columns.str.strip().str.upper()
 
@@ -24,12 +25,11 @@ def append_data(con, data):
 
 
 with duckdb.connect(file) as con:
-    con.sql(
-        "BEGIN TRANSACTION"
-    )  # starting a transaction -- changes are synced once = improves performance
+    con.sql("BEGIN TRANSACTION")  # starting a transaction
     append_data(con, new_data)
     con.sql("COMMIT")  # committing the transaction
-    print(con.sql("SELECT * FROM cpi_append"))
+    print("append_method")
+    print(con.sql("SELECT * FROM cpi_append").fetchdf())
 
 
 # truncate
@@ -45,6 +45,7 @@ def truncate_and_load(con, data):
 
 with duckdb.connect(file) as con:
     truncate_and_load(con, new_data)
+    print("truncate_method")
     print(con.sql("SELECT * FROM cpi_trunc").fetchdf())
 
 
@@ -75,9 +76,16 @@ def incremental_load(con, data):
 
 
 with duckdb.connect(file) as con:
-    con.sql(
-        "BEGIN TRANSACTION"
-    )  # starting a transaction -- changes are synced once = improves performance
+    con.sql("BEGIN TRANSACTION")
     incremental_load(con, new_data)
     con.sql("COMMIT")  # committing the transaction
-    print(con.sql("SELECT * FROM cpi_inc"))
+    print("increment_method")
+    print(con.sql("SELECT * FROM cpi_inc").fetchdf())
+
+# verifying revised value differ across tables
+
+print("\n spot check date = 2023:08 (revided 306.3 to 306.1)")
+with duckdb.connect(file) as con:
+    for table in ["cpi_append", "cpi_trunc", "cpi_inc"]:
+        val = con.execute(f"SELECT CPI FROM {table} WHERE DATE = '2023:08'").fetchone()
+        print(f"{table:15s} -> {val[0] if val else 'missing'}")
